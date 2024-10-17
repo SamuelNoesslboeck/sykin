@@ -1,0 +1,7 @@
+[package]
+name = "sykin"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+syunit = "0.3.1"
