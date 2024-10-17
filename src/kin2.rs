@@ -7,7 +7,7 @@ const ROOT_EPSILON : f32 = -1.0e-4;
 /// 
 /// ### TFD - Equations
 /// 
-/// This is the 2-dimensional variant of the time for distance equations. It is a lot cheeper to calculate than [kin3::time_for_distance]
+/// This is the 2-dimensional variant of the time for distance equations. It is a lot cheeper to calculate than [crate::kin3::time_for_distance]
 pub fn time_for_distance(rel_dist : RelDist, velocity_0 : Velocity, acceleration : Acceleration) -> (Time, Time) {
     let p = velocity_0 / acceleration;
     let q = 2.0 * rel_dist.0 / acceleration.0; 
@@ -23,17 +23,26 @@ pub fn time_for_distance(rel_dist : RelDist, velocity_0 : Velocity, acceleration
     ( -p + root, -p - root )
 }
 
-/// A cheeper version of [time_for_distance] when no starting velocity `velocity_0` is present
-pub fn time_for_distance_no_vel0(rel_dist : RelDist, acceleration : Acceleration) -> Time {
-    Time((2.0 * rel_dist.0 / acceleration.0).sqrt())
-}
+// No starting velocity
+    /// A cheeper version of [time_for_distance] when no starting velocity `velocity_0` is present
+    pub fn time_for_distance_no_vel0(rel_dist : RelDist, acceleration : Acceleration) -> Time {
+        Time((2.0 * rel_dist.0 / acceleration.0).sqrt())
+    }
 
-/// Exit velocity when moving a distance `rel_dist` from a zero-velocity state with the acceleration `acceleration`
-pub fn velocity_for_distance_no_vel0(rel_dist : RelDist, acceleration : Acceleration) -> Velocity {
-    Velocity((2.0 * rel_dist.0 * acceleration.0).sqrt())
-}
+    /// Exit velocity when moving a distance `rel_dist` from a zero-velocity state with the acceleration `acceleration`
+    pub fn velocity_for_distance_no_vel0(rel_dist : RelDist, acceleration : Acceleration) -> Velocity {
+        Velocity((2.0 * rel_dist.0 * acceleration.0).sqrt())
+    }
 
-/// The acceleration required to exit a certain distance `rel_dist` with the given velocity `velocity_exit`, starting wiithout any velocity
-pub fn acceleration_required_no_vel0(rel_dist : RelDist, velocity_exit : Velocity) -> Acceleration {
-    Acceleration(velocity_exit.0 * velocity_exit.0 / 2.0 / rel_dist.0)
-}
+    /// The acceleration required to exit a certain distance `rel_dist` with the given velocity `velocity_exit`, starting wiithout any velocity
+    pub fn acceleration_required_no_vel0(rel_dist : RelDist, velocity_exit : Velocity) -> Acceleration {
+        Acceleration(velocity_exit.0 * velocity_exit.0 / 2.0 / rel_dist.0)
+    }
+// 
+
+// With starting velocity
+    /// Returns the time it takes an object to move a distance `rel_dist` with the starting velocity (`velocity_0`) and exit velocity (`velocity_exit`)
+    pub fn time_for_distance_no_accel(rel_dist : RelDist, velocity_0 : Velocity, velocity_exit : Velocity) -> Time {
+        2.0 * rel_dist / (velocity_0 + velocity_exit)
+    }
+// 
