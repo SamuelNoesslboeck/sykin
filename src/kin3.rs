@@ -6,7 +6,26 @@ use syunit::*;
 /// 
 /// This is the 3-dimensional variant of the time for distance equations
 pub fn time_for_distance(rel_dist : RelDist, velocity_0 : Velocity, acceleration_0 : Acceleration, jolt : Jolt) -> Time {
-    Time::ZERO
+    // Values of full cubic formula
+    let a = jolt.0 / 6.0;
+    let b = acceleration_0.0 / 2.0;
+    let c = velocity_0.0; 
+    let d = -rel_dist.0;
+
+    // Creating depressed cubic
+    let shift = b / (3.0*a);
+    let p = (3.0*a*c - b*b) / (3.0*a*a);
+    let q = (2.0*b*b*b - 9.0*a*b*c + 27.0*a*a*d) / (27.0*a*a*a);
+
+    // Calculate the helper root 
+    let root = (q*q / 4.0 + p*p*p / 27.0).sqrt();
+
+    // Helper numbers
+    let u_1 = -q/2.0 + root;
+    let u_2 = -q/2.0 - root;
+
+    // Return the result
+    Time(u_1.cbrt() + u_2.cbrt() - shift)
 }
 
 /// The time it takes a motor to move the distance `rel_dist` with the given maximum `jolt` without any starting acceleration or velocity

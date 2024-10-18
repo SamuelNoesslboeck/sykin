@@ -4,4 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-syunit = "0.3.1"
+syunit = "0.3.2"
+
+[[example]]
+name = "full_walkthrough"
+path = "examples/full_walkthrough.rs"
