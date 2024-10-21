@@ -25,15 +25,15 @@ pub fn time_for_distance<U : UnitSet>(rel_dist : U::Distance, velocity_0 : U::Ve
     let u_2 = -q/2.0 - root;
 
     // Return the result
-    U::Time::new(u_1.cbrt() + u_2.cbrt() - shift)
+    U::Time::from(u_1.cbrt() + u_2.cbrt() - shift)
 }
 
 /// The time it takes a motor to move the distance `rel_dist` with the given maximum `jolt` without any starting acceleration or velocity
 pub fn time_for_distance_only_jolt<U : UnitSet>(rel_dist : U::Distance, jolt : U::Jolt) -> U::Time {
-    U::Time::new((6.0 * rel_dist.into() / jolt.into()).cbrt())
+    U::Time::from((6.0 * rel_dist.into() / jolt.into()).cbrt())
 }
 
 /// The exit acceleration of an object after moving the distance `rel_dist` with the maximum `jolt` without any starting acceleration or velocity
 pub fn acceleration_for_distance_only_jolt<U : UnitSet>(rel_dist : U::Distance, jolt : U::Jolt) -> U::Acceleration {
-    U::Acceleration::new((6.0 * rel_dist.into() * jolt.into() * jolt.into()).cbrt())
+    U::Acceleration::from((6.0 * rel_dist.into() * jolt.into() * jolt.into()).cbrt())
 } 
