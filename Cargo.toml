@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-syunit = "0.3.2"
+syunit = { path = "../syunit"}
 
 [[example]]
 name = "full_walkthrough"

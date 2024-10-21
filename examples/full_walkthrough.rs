@@ -1,4 +1,5 @@
 use syunit::*;
+use syunit::metric::*;
 
 pub fn prompt<T : core::str::FromStr + Copy>(msg : &str, default_opt : Option<T>) -> T {
     let mut input_string = String::new();
@@ -22,11 +23,11 @@ pub fn prompt<T : core::str::FromStr + Copy>(msg : &str, default_opt : Option<T>
 
 fn main() {
     // Kin3
-    let jolt : Jolt = prompt("Enter jolt: ", Some(Jolt(1.0)));
-    let accel : Acceleration = prompt("Enter acceleration: ", Some(Acceleration(1.0)));
-    let vel : Velocity = prompt("Enter velocity: ", Some(Velocity(1.0)));
-    let dist : RelDist = prompt("Enter relative distance: ", Some(RelDist(1.0)));
+    let jolt : MMPerSecond3 = prompt("Enter jolt: ", Some(MMPerSecond3(1.0)));
+    let accel : MMPerSecond2 = prompt("Enter acceleration: ", Some(MMPerSecond2(1.0)));
+    let vel : MMPerSecond = prompt("Enter velocity: ", Some(MMPerSecond(1.0)));
+    let dist : Millimeters = prompt("Enter relative distance: ", Some(Millimeters(1.0)));
 
     println!();
-    println!("Result: {}", sykin::kin3::time_for_distance(dist, vel, accel, jolt));
+    println!("Result: {}", sykin::kin3::time_for_distance::<MetricMM>(dist, vel, accel, jolt));
 }

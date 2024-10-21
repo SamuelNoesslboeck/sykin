@@ -5,12 +5,12 @@ use syunit::*;
 /// ### TFD - Equations
 /// 
 /// This is the 3-dimensional variant of the time for distance equations
-pub fn time_for_distance(rel_dist : RelDist, velocity_0 : Velocity, acceleration_0 : Acceleration, jolt : Jolt) -> Time {
+pub fn time_for_distance<U : UnitSet>(rel_dist : U::Distance, velocity_0 : U::Velocity, acceleration_0 : U::Acceleration, jolt : U::Jolt) -> U::Time {
     // Values of full cubic formula
-    let a = jolt.0 / 6.0;
-    let b = acceleration_0.0 / 2.0;
-    let c = velocity_0.0; 
-    let d = -rel_dist.0;
+    let a = jolt.into() / 6.0;
+    let b = acceleration_0.into() / 2.0;
+    let c = velocity_0.into(); 
+    let d = -rel_dist.into();
 
     // Creating depressed cubic
     let shift = b / (3.0*a);
@@ -25,15 +25,15 @@ pub fn time_for_distance(rel_dist : RelDist, velocity_0 : Velocity, acceleration
     let u_2 = -q/2.0 - root;
 
     // Return the result
-    Time(u_1.cbrt() + u_2.cbrt() - shift)
+    U::Time::new(u_1.cbrt() + u_2.cbrt() - shift)
 }
 
 /// The time it takes a motor to move the distance `rel_dist` with the given maximum `jolt` without any starting acceleration or velocity
-pub fn time_for_distance_only_jolt(rel_dist : RelDist, jolt : Jolt) -> Time {
-    Time((6.0 * rel_dist.0 / jolt.0).cbrt())
+pub fn time_for_distance_only_jolt<U : UnitSet>(rel_dist : U::Distance, jolt : U::Jolt) -> U::Time {
+    U::Time::new((6.0 * rel_dist.into() / jolt.into()).cbrt())
 }
 
 /// The exit acceleration of an object after moving the distance `rel_dist` with the maximum `jolt` without any starting acceleration or velocity
-pub fn acceleration_for_distance_only_jolt(rel_dist : RelDist, jolt : Jolt) -> Acceleration {
-    Acceleration((6.0 * rel_dist.0 * jolt.0 * jolt.0).cbrt())
+pub fn acceleration_for_distance_only_jolt<U : UnitSet>(rel_dist : U::Distance, jolt : U::Jolt) -> U::Acceleration {
+    U::Acceleration::new((6.0 * rel_dist.into() * jolt.into() * jolt.into()).cbrt())
 } 

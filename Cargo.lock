@@ -60,9 +60,7 @@ dependencies = [
 
 [[package]]
 name = "syunit"
-version = "0.3.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "476f023e4271ef0606a48fcb66126b20a2a6c96c61f8470ea988ee8e0f69e4af"
+version = "0.4.0"
 dependencies = [
  "serde",
 ]
