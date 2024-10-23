@@ -1,6 +1,8 @@
 #![doc = include_str!("../README.md")]
 #![crate_name = "sykin"]
-// #![no_std]
+#![no_std]
+// Rules
+#![deny(missing_docs)]
 
 // Rules
 #![deny(missing_docs)]

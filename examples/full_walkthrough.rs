@@ -30,4 +30,6 @@ fn main() {
 
     println!();
     println!("Result: {}", sykin::kin3::time_for_distance::<MetricMM>(dist, vel, accel, jolt));
+
+    // TODO: Add more calculations
 }
