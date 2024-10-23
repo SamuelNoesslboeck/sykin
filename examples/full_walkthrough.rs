@@ -23,13 +23,18 @@ pub fn prompt<T : core::str::FromStr + Copy>(msg : &str, default_opt : Option<T>
 
 fn main() {
     // Kin3
-    let jolt : MMPerSecond3 = prompt("Enter jolt: ", Some(MMPerSecond3(1.0)));
-    let accel : MMPerSecond2 = prompt("Enter acceleration: ", Some(MMPerSecond2(1.0)));
-    let vel : MMPerSecond = prompt("Enter velocity: ", Some(MMPerSecond(1.0)));
-    let dist : Millimeters = prompt("Enter relative distance: ", Some(Millimeters(1.0)));
+    // let jolt : MMPerSecond3 = prompt("Enter jolt: ", Some(MMPerSecond3(1.0)));
+    // let accel : MMPerSecond2 = prompt("Enter acceleration: ", Some(MMPerSecond2(1.0)));
+    // let vel : MMPerSecond = prompt("Enter velocity: ", Some(MMPerSecond(1.0)));
+    // let dist : Millimeters = prompt("Enter relative distance: ", Some(Millimeters(1.0)));
 
-    println!();
-    println!("Result: {}", sykin::kin3::time_for_distance::<MetricMM>(dist, vel, accel, jolt));
+    // println!("Result: {}", sykin::kin3::time_for_distance::<MetricMM>(dist, vel, accel, jolt));
 
     // TODO: Add more calculations
+    let distance = Millimeters(6.0);
+    let velocity = MMPerSecond(11.0); 
+    let acceleration = MMPerSecond2(-12.0);
+    let jolt = MMPerSecond3(6.0);
+
+    assert_eq!(sykin::kin3::time_for_distance::<MetricMM>(distance, velocity, acceleration, jolt), Seconds(1.0));
 }

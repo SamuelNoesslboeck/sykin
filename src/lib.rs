@@ -18,4 +18,11 @@
 
     /// Kinematic formulas for distance, velocity, acceleration and jolt
     pub mod kin3;
+
+    /// Lazy import of the library (mainly for testing/examples)
+    pub mod prelude {
+        pub use crate::kin1;
+        pub use crate::kin2;
+        pub use crate::kin3;
+    }
 // 

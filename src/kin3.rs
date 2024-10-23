@@ -17,15 +17,24 @@ pub fn time_for_distance<U : UnitSet>(rel_dist : U::Distance, velocity_0 : U::Ve
     let p = (3.0*a*c - b*b) / (3.0*a*a);
     let q = (2.0*b*b*b - 9.0*a*b*c + 27.0*a*a*d) / (27.0*a*a*a);
 
+    // Calculate discriminant
+    let dis = q*q / 4.0 + p*p*p / 27.0;
+
     // Calculate the helper root 
-    let root = (q*q / 4.0 + p*p*p / 27.0).sqrt();
+    if dis > 0.0 {
+        // Use Cardano's formula
+        let root = dis.sqrt();
 
-    // Helper numbers
-    let u_1 = -q/2.0 + root;
-    let u_2 = -q/2.0 - root;
-
-    // Return the result
-    U::Time::from(u_1.cbrt() + u_2.cbrt() - shift)
+        // Helper numbers
+        let u_1 = -q/2.0 + root;
+        let u_2 = -q/2.0 - root;
+    
+        // Return the result
+        U::Time::from(u_1.cbrt() + u_2.cbrt() - shift)
+    } else {
+        // TODO: Full implementation with complex numbers
+        U::Time::NAN
+    }
 }
 
 /// The time it takes a motor to move the distance `rel_dist` with the given maximum `jolt` without any starting acceleration or velocity
